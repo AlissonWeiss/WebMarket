@@ -7,7 +7,7 @@ class Profile extends Component {
         return (
             <View style={styles.container}>
                 <Header />
-                <Text>Profile</Text>
+                
             </View>
         )
     }
