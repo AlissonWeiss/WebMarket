@@ -75,24 +75,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
                 },
                 title: 'Meu perfil'
             }
-        },
-        Administrador: {
-            screen: AddProduto,
-            navigationOptions: {
-                tabBarIcon: ({ tintColor }) => (
-                    <View>
-                        <Icon style={[{ color: tintColor }]} size={25} name={'gears'} />
-                    </View>
-                ),
-                activeColor: '#FFEEF2',
-                inactiveColor: '#3e2465',
-                barStyle: {
-                    backgroundColor: '#585142'
-                },
-                title: 'Administrador'
-            }
         }
-
     }
     ,
     {
