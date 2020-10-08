@@ -5,7 +5,7 @@ import Header from '../components/Header'
 
 class Profile extends Component {
     logout = () => {
-
+        this.props.navigation.navigate('Auth')
     }
 
     render() {

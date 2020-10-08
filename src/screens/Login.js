@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
 
+import Register from './Register'
+
 class Login extends Component {
     state = {
         email: '',
@@ -31,7 +33,9 @@ class Login extends Component {
                     <Text style={styles.botaoTexto}>Login</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.botao} onPress={this.login}>
+                <TouchableOpacity style={styles.botao} onPress={() => {
+                    this.props.navigation.navigate('Register')
+                }}>
                     <Text style={styles.botaoTexto}>Registrar</Text>
                 </TouchableOpacity>
 

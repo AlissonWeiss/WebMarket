@@ -2,6 +2,8 @@ import React from 'react'
 import {View} from 'react-native'
 import {createAppContainer} from 'react-navigation'
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
+import {createSwitchNavigator} from 'react-navigation'
+import {createStackNavigator} from 'react-navigation-stack'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Feed from './screens/Feed'
@@ -9,6 +11,24 @@ import Promotions from './screens/Promotions'
 import Cart from './screens/Cart'
 import Profile from './screens/Profile'
 import AddProduto from './screens/AddProduto'
+import Login from './screens/Login'
+import Register from './screens/Register'
+
+const authRouter = createStackNavigator({
+    Login: {screen: Login, navigationOptions: {title: 'Login'} },
+    Register: {screen: Register, navigationOptions: {title: 'Register'}}
+},
+{
+    initialRouteName: 'Login'
+})
+
+const loginOrProfileRouter = createSwitchNavigator({
+    Profile: Profile,
+    Auth: authRouter
+},
+{
+    initialRouteName: 'Profile'
+})
 
 const TabNavigator = createMaterialBottomTabNavigator(
     {
@@ -61,7 +81,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             }
         },
         Perfil: {
-            screen: Profile,
+            screen: loginOrProfileRouter,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <View>
