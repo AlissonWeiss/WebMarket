@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Dimensions, Platform, ScrollView, Alert, Button} from 'react-native'
 import ImagePicker from 'react-native-image-picker'
+import {connect} from 'react-redux'
+import {addProduct} from '../store/actions/produtosActions'
 
 class AddProduto extends Component{
     state = {
@@ -23,7 +25,16 @@ class AddProduto extends Component{
         })
     }
     save = async () => {
-        Alert.alert('Produto adicionado!', this.state.preco)
+        this.props.onAddProduto({
+            id: Math.random,
+            name: this.props.name,
+            email: this.props.email,
+            image: this.state.image,
+        })
+
+        this.setState({image: null})
+
+        this.props.navigation.navigate('Feed')
     }
 
     render () {
@@ -90,4 +101,17 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AddProduto
+const mapStateToProps = ({user}) => {
+    return {
+        email: user.email,
+        name: user.name
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddProduto: post => dispatch(addProduct(post))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduto)

@@ -37,7 +37,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <View>
-                        <Icon style={[{color: tintColor}]} size={25} name={'home'} />
+                        <Icon style={[{color: tintColor}]} size={20} name={'home'} />
                     </View>
                 ),
                 activeColor: '#ffffff',
@@ -53,7 +53,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <View>
-                        <Icon style={[{color: tintColor}]} size={25} name={'percent'} />
+                        <Icon style={[{color: tintColor}]} size={20} name={'percent'} />
                     </View>
                 ),
                 activeColor: '#ffffff',
@@ -69,7 +69,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <View>
-                        <Icon style={[{color: tintColor}]} size={25} name={'shopping-cart'} />
+                        <Icon style={[{color: tintColor}]} size={20} name={'shopping-cart'} />
                     </View>
                 ),
                 activeColor: '#ffffff',
@@ -85,7 +85,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <View>
-                        <Icon style={[{color: tintColor}]} size={25} name={'user'} />
+                        <Icon style={[{color: tintColor}]} size={20} name={'user'} />
                     </View>
                 ),
                 activeColor: '#ffffff',
@@ -94,6 +94,22 @@ const TabNavigator = createMaterialBottomTabNavigator(
                     backgroundColor: '#696969'
                 },
                 title: 'Meu perfil'
+            }
+        },
+        Administrador: {
+            screen: AddProduto,
+            navigationOptions: {
+                tabBarIcon: ({ tintColor }) => (
+                    <View>
+                        <Icon style={[{color: tintColor}]} size={20} name={'gear'} />
+                    </View>
+                ),
+                activeColor: '#ffffff',
+                inactiveColor: '#92c5c2',
+                barStyle: {
+                    backgroundColor: '#696969'
+                },
+                title: 'Administrador'
             }
         }
     }
