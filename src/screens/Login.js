@@ -7,10 +7,12 @@ class Login extends Component {
     state = {
         name: 'Temporário',
         email: '',
-        senha: ''
+        senha: '',
+        isLoggedIn: false,
     }
 
     login = () => {
+        this.state.isLoggedIn = true;
         this.props.onLogin({...this.state})
         this.props.navigation.navigate('Profile')
     }

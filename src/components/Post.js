@@ -13,12 +13,14 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#FFF'
     },
     image: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').width * 3 / 4,
-        resizeMode: 'contain'
+        height: Dimensions.get('window').width * 3 / 5,
+        resizeMode: 'contain',
+        marginTop: 10
     }
 })
 

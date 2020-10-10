@@ -13,13 +13,21 @@ import Profile from './screens/Profile'
 import AddProduto from './screens/AddProduto'
 import Login from './screens/Login'
 import Register from './screens/Register'
+import Administrator from './screens/Administrator'
+import ExcProduto from './screens/ExcProduto'
 
 const authRouter = createStackNavigator({
     Login: {screen: Login, navigationOptions: {title: 'Login'} },
-    Register: {screen: Register, navigationOptions: {title: 'Register'}}
+    Register: {screen: Register, navigationOptions: {title: 'Registrar'}}
 },
 {
     initialRouteName: 'Login'
+})
+
+const administratorRouter = createStackNavigator({
+    Administrator: {screen: Administrator, navigationOptions: {title: 'Administrador'}},
+    AddProduto: {screen: AddProduto, navigationOptions: {title: 'Adicionar produto'}},
+    ExcProduto: {screen: ExcProduto, navigationOptions: {title: 'Excluir produto'}}
 })
 
 const loginOrProfileRouter = createSwitchNavigator({
@@ -28,6 +36,15 @@ const loginOrProfileRouter = createSwitchNavigator({
 },
 {
     initialRouteName: 'Auth'
+})
+
+const administratorSwitchRouter = createSwitchNavigator({
+    Administrator: administratorRouter,
+    AddProduto: administratorRouter,
+    ExcProduto: administratorRouter
+},
+{
+    initialRouteName: 'Administrator'
 })
 
 const TabNavigator = createMaterialBottomTabNavigator(
@@ -97,7 +114,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             }
         },
         Administrador: {
-            screen: AddProduto,
+            screen: administratorSwitchRouter,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <View>
@@ -109,8 +126,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
                 barStyle: {
                     backgroundColor: '#696969'
                 },
-                title: 'Administrador'
-            }
+                title: 'Administrador',
+            },
         }
     }
     ,

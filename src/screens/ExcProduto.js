@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Dimensions, Platform, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Dimensions, Platform, ScrollView, Alert, Button} from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import {connect} from 'react-redux'
 import {addProduct} from '../store/actions/produtosActions'
-
-import {USUARIO_NAO_LOGADO} from '../errors/constErrors'
 
 class AddProduto extends Component{
     state = {
@@ -13,12 +11,6 @@ class AddProduto extends Component{
     }
     
     pickImage = () => {
-
-        if (!this.props.isLoggedIn){
-            alert(USUARIO_NAO_LOGADO)
-            return
-        }
-
         ImagePicker.showImagePicker({
             title: 'Escolha a imagem',
             maxHeight: 600,
@@ -33,13 +25,8 @@ class AddProduto extends Component{
         })
     }
     save = async () => {
-        if (!this.props.isLoggedIn){
-            alert(USUARIO_NAO_LOGADO)
-            return
-        }
-
         this.props.onAddProduto({
-            id: this.props.id,
+            id: Math.random,
             name: this.props.name,
             email: this.props.email,
             image: this.state.image,
@@ -54,16 +41,20 @@ class AddProduto extends Component{
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={styles.imageContainer} onTouchStart={this.pickImage} >
-                        <Image source={this.state.image} style={styles.image}  />
+                    <Text style={styles.title}>Produto</Text>
+                    <View style={styles.imageContainer}>
+                        <Image source={this.state.image} style={styles.image}/>
                     </View>
                 </View>
+                <TouchableOpacity onPress={this.pickImage} style={styles.botao}>
+                    <Text>Escolha a imagem</Text>
+                </TouchableOpacity>
                 <TextInput placeholder='Preço'
                  style={styles.input}
                  value={this.state.preco}
                  keyboardType="numeric"
                  onChangeText={preco => this.setState({preco})}/>
-                 <TouchableOpacity onPress={this.save} style={styles.botao} >
+                 <TouchableOpacity onPress={this.save} style={styles.botao}>
                     <Text style={styles.botaoSalvar}>Salvar</Text>
                  </TouchableOpacity>
             </ScrollView>
@@ -113,8 +104,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({user}) => {
     return {
         email: user.email,
-        name: user.name,
-        isLoggedIn: user.isLoggedIn
+        name: user.name
     }
 }
 

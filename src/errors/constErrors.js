@@ -1,0 +1,1 @@
+export const USUARIO_NAO_LOGADO = 'Não é possível concluir esta ação! Usuário não logado!'
