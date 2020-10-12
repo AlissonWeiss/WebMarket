@@ -5,7 +5,7 @@ class Post extends Component {
     render() {
         return (
             <View style={StyleSheet.container}>
-                <Image source={this.props.image} style={styles.image} />
+                <Image source={{uri: this.props.image}} style={styles.image} />
             </View>
         )
     }

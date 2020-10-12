@@ -11,7 +11,16 @@ class AddProduto extends Component{
         image: null,
         preco: null,
     }
-    
+    componentDidUpdate = prevProps => {
+        if (prevProps.loading && !this.props.loading){
+            this.setState({
+                image: null,
+                preco: ''
+            })
+            this.props.navigation.navigate('Feed')
+        }
+    }
+
     pickImage = () => {
 
         if (!this.props.isLoggedIn){
@@ -33,21 +42,12 @@ class AddProduto extends Component{
         })
     }
     save = async () => {
-        if (!this.props.isLoggedIn){
-            alert(USUARIO_NAO_LOGADO)
-            return
-        }
-
         this.props.onAddProduto({
             id: this.props.id,
             name: this.props.name,
             email: this.props.email,
             image: this.state.image,
         })
-
-        this.setState({image: null})
-
-        this.props.navigation.navigate('Feed')
     }
 
     render () {
@@ -63,7 +63,7 @@ class AddProduto extends Component{
                  value={this.state.preco}
                  keyboardType="numeric"
                  onChangeText={preco => this.setState({preco})}/>
-                 <TouchableOpacity onPress={this.save} style={styles.botao} >
+                 <TouchableOpacity onPress={this.save} style={[styles.botao, this.props.loading ? styles.botaoDesabilitado : null]} disabled={this.props.loading} >
                     <Text style={styles.botaoSalvar}>Salvar</Text>
                  </TouchableOpacity>
             </ScrollView>
@@ -107,13 +107,18 @@ const styles = StyleSheet.create({
         width: '90%',
         alignItems: 'center',
         height: 50,
+    },
+    botaoDesabilitado: {
+        backgroundColor: '#AAA'
     }
 })
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user, posts}) => {
     return {
         email: user.email,
         name: user.name,
+        preco: posts.preco,
+        loading: posts.isUploading,
         isLoggedIn: user.isLoggedIn
     }
 }
