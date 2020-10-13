@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Dimensions, 
 import ImagePicker from 'react-native-image-picker'
 import {connect} from 'react-redux'
 import {addProduct} from '../store/actions/produtosActions'
+import {Picker} from '@react-native-community/picker'
 
 import {USUARIO_NAO_LOGADO} from '../errors/constErrors'
 
@@ -10,12 +11,14 @@ class AddProduto extends Component{
     state = {
         image: null,
         preco: null,
+        fabricante: null,
     }
     componentDidUpdate = prevProps => {
         if (prevProps.loading && !this.props.loading){
             this.setState({
                 image: null,
-                preco: ''
+                preco: null,
+                fabricante: null
             })
             this.props.navigation.navigate('Feed')
         }
@@ -47,6 +50,8 @@ class AddProduto extends Component{
             name: this.props.name,
             email: this.props.email,
             image: this.state.image,
+            preco: this.state.preco,
+            fabricante: this.state.fabricante
         })
     }
 
@@ -63,6 +68,11 @@ class AddProduto extends Component{
                  value={this.state.preco}
                  keyboardType="numeric"
                  onChangeText={preco => this.setState({preco})}/>
+                <Picker onValueChange={fabricante => this.setState({fabricante})}>
+                    <Picker.Item label='Test1' value='Test1'/>
+                    <Picker.Item label='Test2' value='Test2'/>
+                    <Picker.Item label='Test3' value='Test3'/>
+                </Picker>
                  <TouchableOpacity onPress={this.save} style={[styles.botao, this.props.loading ? styles.botaoDesabilitado : null]} disabled={this.props.loading} >
                     <Text style={styles.botaoSalvar}>Salvar</Text>
                  </TouchableOpacity>
@@ -118,6 +128,7 @@ const mapStateToProps = ({user, posts}) => {
         email: user.email,
         name: user.name,
         preco: posts.preco,
+        fabricante: posts.fabricante,
         loading: posts.isUploading,
         isLoggedIn: user.isLoggedIn
     }

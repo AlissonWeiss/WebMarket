@@ -10,7 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/checkbox": "^0.5.5",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/picker": "^1.8.1",
     "axios": "0.20.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
@@ -24,8 +26,8 @@
     "react-native-vector-icons": "7.1.0",
     "react-navigation": "4.4.1",
     "react-navigation-material-bottom-tabs": "^2.3.2",
-    "react-navigation-tabs": "2.9.1",
     "react-navigation-stack": "2.8.3",
+    "react-navigation-tabs": "2.9.1",
     "react-redux": "7.2.1",
     "redux": "4.0.5",
     "redux-thunk": "2.3.0"

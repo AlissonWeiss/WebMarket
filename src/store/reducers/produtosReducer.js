@@ -1,4 +1,4 @@
-import {SET_POSTS, EXC_PRODUCT, CREATING_POST, POST_CREATED} from '../actions/actionTypes'
+import {SET_POSTS, CREATING_POST, POST_CREATED} from '../actions/actionTypes'
 
 const initialState = {
     posts: [],
@@ -11,13 +11,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: action.payload
-            }
-        case EXC_PRODUCT:
-            return {
-                ...state,
-                posts: state.posts.concat({
-                    ...action.payload
-                })
             }
         case CREATING_POST:
             return {

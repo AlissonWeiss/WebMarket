@@ -14,7 +14,7 @@ import AddProduto from './screens/AddProduto'
 import Login from './screens/Login'
 import Register from './screens/Register'
 import Administrator from './screens/Administrator'
-import ExcProduto from './screens/ExcProduto'
+import AddFabricante from './screens/AddFabricante'
 
 const authRouter = createStackNavigator({
     Login: {screen: Login, navigationOptions: {title: 'Login'} },
@@ -27,7 +27,7 @@ const authRouter = createStackNavigator({
 const administratorRouter = createStackNavigator({
     Administrator: {screen: Administrator, navigationOptions: {title: 'Administrador'}},
     AddProduto: {screen: AddProduto, navigationOptions: {title: 'Adicionar produto'}},
-    ExcProduto: {screen: ExcProduto, navigationOptions: {title: 'Excluir produto'}}
+    AddFabricante: {screen: AddFabricante, navigationOptions: {title: 'Adicionar fabricante'}}
 })
 
 const loginOrProfileRouter = createSwitchNavigator({

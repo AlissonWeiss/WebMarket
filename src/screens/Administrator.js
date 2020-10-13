@@ -9,9 +9,8 @@ class Administrator extends Component {
                 <TouchableOpacity style={styles.botao} onPress={() => this.props.navigation.navigate('AddProduto')}>
                     <Text style={styles.botaoTexto}>Adicionar novo produto</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.botao} onPress={() => this.props.navigation.navigate('ExcProduto')}>
-                    <Text style={styles.botaoTexto}>Excluir produto</Text>
+                <TouchableOpacity style={styles.botao} onPress={() => this.props.navigation.navigate('AddFabricante')}>
+                    <Text>Adicionar novo fabricante</Text>
                 </TouchableOpacity>
             </View>
 

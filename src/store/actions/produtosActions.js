@@ -1,4 +1,4 @@
-import {SET_POSTS, EXC_PRODUCT, CREATING_POST, POST_CREATED} from './actionTypes'
+import {SET_POSTS, CREATING_POST, POST_CREATED} from './actionTypes'
 import axios from 'axios'
 
 export const addProduct = product => {
@@ -22,13 +22,6 @@ export const addProduct = product => {
                         dispatch(postCreated())
                     })
         })
-    }
-}
-
-export const excProduct = product => {
-    return {
-        type: EXC_PRODUCT,
-        payload: product
     }
 }
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, Dimensions, Text } from 'react-native'
 
 class Post extends Component {
     render() {
         return (
             <View style={StyleSheet.container}>
                 <Image source={{uri: this.props.image}} style={styles.image} />
+                <Text>Preço: R$ {this.props.preco}</Text>
+                <Text>Fabricante: {this.props.fabricante}</Text>
             </View>
         )
     }
