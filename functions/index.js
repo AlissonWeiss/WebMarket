@@ -1,3 +1,4 @@
+import {setMessage} from '../src/store/actions/messageAction'
 const functions = require('firebase-functions');
 const cors = require('cors')({origin: true})
 const fs = require('fs')
@@ -28,7 +29,10 @@ const storage = new Storage({
                 }
             },(erro, file) => {
                 if (erro){
-                    console.log(erro)
+                    dispatch(setMessage({
+                        title: 'Erro',
+                        text: 'Problema ao salvar imagem.'
+                    }))
                     return response.status(500).json({error: erro})
                 }
                 else{

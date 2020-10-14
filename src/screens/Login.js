@@ -9,6 +9,7 @@ class Login extends Component {
         email: '',
         password: '',
         isLoggedIn: false,
+        token: null
     }
 
     componentDidUpdate = prevProps => {

@@ -15,6 +15,7 @@ import Login from './screens/Login'
 import Register from './screens/Register'
 import Administrator from './screens/Administrator'
 import AddFabricante from './screens/AddFabricante'
+import SplashScreen from './screens/SplashScreen'
 
 const authRouter = createStackNavigator({
     Login: {screen: Login, navigationOptions: {title: 'Login'} },
@@ -142,5 +143,11 @@ const TabNavigator = createMaterialBottomTabNavigator(
     }
 );
 
+const SplashRouter = createSwitchNavigator({
+    SplashScreen: SplashScreen,
+    TabNavigator: TabNavigator
+},{
+    initialRouteName: 'SplashScreen'
+})
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(SplashRouter)

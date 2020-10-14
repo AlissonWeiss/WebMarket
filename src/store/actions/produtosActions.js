@@ -1,8 +1,9 @@
 import {SET_POSTS, CREATING_POST, POST_CREATED} from './actionTypes'
 import axios from 'axios'
+import {setMessage} from './messageAction'
 
 export const addProduct = product => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(creatingPost())
         axios({
             url: 'uploadImage',
@@ -12,11 +13,22 @@ export const addProduct = product => {
                 image: product.image.base64
             }
         })
-            .catch(erro => console.log(erro))
+            .catch(erro => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: 'Problema ao adicionar novo produto. ' + erro
+                }))
+            })
             .then(resp => {
                 product.image = resp.data.imageUrl
-                axios.post('/produtos.json', {...product})
-                    .catch(err => console.log(err))
+                //token passado para a regra do banco de dados
+                axios.post(`/produtos.json?auth=${getState().user.token}`, {...product})
+                    .catch(err => {
+                        dispatch(setMessage({
+                            title: 'Erro',
+                            text: 'Problema ao adicionar novo produto. ' + err
+                        }))
+                    })
                     .then(res => {
                         dispatch(getPosts())
                         dispatch(postCreated())
@@ -35,7 +47,12 @@ export const setPosts = posts => {
 export const getPosts = () => {
     return dispatch => {
         axios.get('/produtos.json')
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: 'Problema ao adicionar novo produto. ' + err
+                }))
+            })
             .then(res => {
                 const rawPosts = res.data
                 const posts = []

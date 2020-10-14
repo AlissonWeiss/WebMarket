@@ -68,11 +68,19 @@ class AddProduto extends Component{
                  value={this.state.preco}
                  keyboardType="numeric"
                  onChangeText={preco => this.setState({preco})}/>
+
                 <Picker onValueChange={fabricante => this.setState({fabricante})}>
-                    <Picker.Item label='Test1' value='Test1'/>
-                    <Picker.Item label='Test2' value='Test2'/>
-                    <Picker.Item label='Test3' value='Test3'/>
+                    <Picker.Item label='Açougue' value='Açougue'/>
+                    <Picker.Item label='Bebidas' value='Bebidas'/>
+                    <Picker.Item label='Congelados' value='Congelados'/>
+                    <Picker.Item label='Frios' value='Frios'/>
+                    <Picker.Item label='Higiene pessoal' value='Higiene pessoal'/>
+                    <Picker.Item label='Hortifrúti' value='Hortifrúti'/>
+                    <Picker.Item label='Laticínios' value='Laticínios'/>
+                    <Picker.Item label='Limpeza' value='Limpeza'/>
+                    <Picker.Item label='Padaria' value='Padaria'/>
                 </Picker>
+                
                  <TouchableOpacity onPress={this.save} style={[styles.botao, this.props.loading ? styles.botaoDesabilitado : null]} disabled={this.props.loading} >
                     <Text style={styles.botaoSalvar}>Salvar</Text>
                  </TouchableOpacity>

@@ -37,9 +37,15 @@ export const login = user => {
             password: user.password,
             returnSecureToken: true,
         })
-        .catch(error => console.log(error.response.request._response + ' 001' + 'user.password' + user.password))
+        .catch(err => {
+            dispatch(setMessage({
+                title: 'Erro',
+                text: 'Ocorreu um erro inesperado!'
+            }))
+        })
         .then(res => {
             if (res.data.localId){
+                user.token = res.data.idToken
                 axios.get(`/users/${res.data.localId}.json`)
                 .catch(error => console.log(error.response.request._response))
                 .then(res => {
@@ -61,15 +67,25 @@ export const createUser =  user => {
             password: user.password,
             returnSecureToken: true
         })
-        .catch(error => console.log(error.response.request._response))
+        .catch(err => {
+            dispatch(setMessage({
+                title: 'Erro',
+                text: 'Ocorreu um erro inesperado!'
+            }))
+        })
         .then(res => {
             if (res.data.localId){
                 axios.put(`/users/${res.data.localId}.json`, {
                     nome: user.nome,
                 })
-                .catch(error => console.log(error.response.request._response))
-                .then(resp => {
-                    console.log('Usuário criado com sucesso!')
+                .catch(err => {
+                    dispatch(setMessage({
+                        title: 'Erro',
+                        text: 'Ocorreu um erro inesperado!'
+                    }))
+                })
+                .then(() => {
+                    dispatch(login(user))
                 })
             }
         })

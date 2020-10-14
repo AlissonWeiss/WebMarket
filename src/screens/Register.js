@@ -11,6 +11,17 @@ class Register extends Component {
         email: ''
     }
 
+    componentDidUpdate = prevProps => {
+        if (prevProps.isLoading && !this.props.isLoading) {
+            this.setState({
+                nome: '',
+                password: '',
+                email: ''
+            })
+            this.props.navigation.navigate('Profile')
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -22,13 +33,11 @@ class Register extends Component {
 
                 <TextInput placeholder='Email'
                     style={styles.input}
-                    autoFocus={true}
                     value={this.state.email}
                     onChangeText={email => this.setState({email})} />
 
                 <TextInput placeholder='Senha'
                     style={styles.input}
-                    autoFocus={true}
                     value={this.state.password}
                     secureTextEntry={true}
                     onChangeText={password => this.setState({password})} />
@@ -67,10 +76,16 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = ({user}) => {
+    return {
+        isLoading: user.isLoading
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         onCreateUser: user => dispatch(createUser(user))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Register)
