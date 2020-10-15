@@ -5,8 +5,6 @@ import {connect} from 'react-redux'
 import {addProduct} from '../store/actions/produtosActions'
 import {Picker} from '@react-native-community/picker'
 
-import {USUARIO_NAO_LOGADO} from '../errors/constErrors'
-
 class AddProduto extends Component{
     state = {
         image: null,
@@ -29,11 +27,6 @@ class AddProduto extends Component{
     }
 
     pickImage = () => {
-
-        if (!this.props.isLoggedIn){
-            alert(USUARIO_NAO_LOGADO)
-            return
-        }
 
         ImagePicker.showImagePicker({
             title: 'Escolha a imagem',

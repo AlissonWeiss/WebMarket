@@ -16,8 +16,10 @@ class Feed extends Component {
                 <FlatList
                     data={this.props.posts}
                     keyExtractor={(item) => `${item.id}`}
-                    renderItem={({item}) =>
-                <Post key={item.id} {...item} />} style={styles.post} />
+                    renderItem={({item, index}) =>
+                <View style={styles.post, index % 2 == 0 ? styles.postPar : styles.postImpar}>
+                    <Post key={item.id} {...item} /> 
+                </View>} />
             </View>
         )
     }
@@ -31,7 +33,16 @@ const styles = StyleSheet.create({
     },
     post: {
         borderRadius: 10,
-        backgroundColor: '#E8F6F4'
+    },
+    postImpar: {
+        backgroundColor: '#E8F6F4',
+        borderBottomColor: '#999999',
+        borderBottomWidth: 3
+    },
+    postPar: {
+        backgroundColor: '#E8F6D4',
+        borderBottomColor: '#999999',
+        borderBottomWidth: 3
     },
 })
 

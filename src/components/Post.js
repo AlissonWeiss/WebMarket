@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Dimensions, Text } from 'react-native'
+import { StyleSheet, View, Image, Dimensions, Text, TouchableOpacity, Alert } from 'react-native'
 
 class Post extends Component {
     render() {
@@ -10,7 +10,7 @@ class Post extends Component {
                 <Text style={styles.bottomInformations}>Preço: R$ {this.props.preco}</Text>
                 <Text style={styles.bottomInformations}>Tipo de produto: {this.props.tipoProduto}</Text>
                 <Text style={styles.bottomInformations}>Unidade de controle: {this.props.unidadeControle}</Text>
-                <Text style={{fontWeight: "bold"}}>________________________________________________________</Text>
+                <Text></Text>
             </View>
         )
     }
