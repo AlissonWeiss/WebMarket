@@ -17,7 +17,7 @@ class Profile extends Component {
             <View style={styles.container}>
                 <Header />
                 <Gravatar options={options} style={styles.avatar} />
-                <Text style={styles.nickname}>{this.props.name}</Text>
+                <Text style={styles.nickname}>{this.props.nome}</Text>
                 <Text style={styles.email}>{this.props.email}</Text>
                 <TouchableOpacity onPress={this.logout} style={styles.btnLogout}>
                     <Text style={styles.btnText}>Sair</Text>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ user }) => {
     return {
         email: user.email,
-        name: user.name
+        nome: user.nome
     }
 }
 

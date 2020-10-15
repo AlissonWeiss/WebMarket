@@ -1,14 +1,27 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native'
 
 import {connect} from 'react-redux'
 import {createUser} from '../store/actions/userActions'
+
+import validaRegistro from '../validacoes/validaRegistro'
 
 class Register extends Component {
     state = {
         nome: '',
         password: '',
+        passwordConfirmacao: '',
         email: ''
+    }
+
+    salvar = user => {
+        var retornoValidacao = new validaRegistro().Validate(user)
+        if (retornoValidacao == ''){
+            this.props.onCreateUser(user)
+        }
+        else{
+            Alert.alert('Erro', retornoValidacao)
+        }
     }
 
     componentDidUpdate = prevProps => {
@@ -16,6 +29,7 @@ class Register extends Component {
             this.setState({
                 nome: '',
                 password: '',
+                passwordConfirmacao: '',
                 email: ''
             })
             this.props.navigation.navigate('Profile')
@@ -34,6 +48,7 @@ class Register extends Component {
                 <TextInput placeholder='Email'
                     style={styles.input}
                     value={this.state.email}
+                    keyboardType='email-address'
                     onChangeText={email => this.setState({email})} />
 
                 <TextInput placeholder='Senha'
@@ -41,11 +56,17 @@ class Register extends Component {
                     value={this.state.password}
                     secureTextEntry={true}
                     onChangeText={password => this.setState({password})} />
-                <TouchableOpacity style={styles.botao} onPress={() => {this.props.onCreateUser(this.state)}}>
+
+                <TextInput placeholder='Confirme sua senha'
+                    style={styles.input}
+                    value={this.state.passwordConfirmacao}
+                    secureTextEntry={true}
+                    onChangeText={passwordConfirmacao => this.setState({passwordConfirmacao})} />
+
+                <TouchableOpacity style={styles.botao} onPress={() => this.salvar(this.state)}>
                     <Text style={styles.botaoTexto}>Salvar</Text>
                 </TouchableOpacity>
             </View>
-
         )
     }
 }

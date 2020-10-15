@@ -11,14 +11,18 @@ class AddProduto extends Component{
     state = {
         image: null,
         preco: null,
-        fabricante: null,
+        tipoProduto: null,
+        nomeProduto: null,
+        unidadeControle: null,
     }
     componentDidUpdate = prevProps => {
         if (prevProps.loading && !this.props.loading){
             this.setState({
                 image: null,
                 preco: null,
-                fabricante: null
+                tipoProduto: null,
+                nomeProduto: null,
+                unidadeControle: null,
             })
             this.props.navigation.navigate('Feed')
         }
@@ -51,7 +55,9 @@ class AddProduto extends Component{
             email: this.props.email,
             image: this.state.image,
             preco: this.state.preco,
-            fabricante: this.state.fabricante
+            tipoProduto: this.state.tipoProduto,
+            nomeProduto: this.state.nomeProduto,
+            unidadeControle: this.state.unidadeControle
         })
     }
 
@@ -63,22 +69,37 @@ class AddProduto extends Component{
                         <Image source={this.state.image} style={styles.image}  />
                     </View>
                 </View>
+
+                <TextInput placeholder='Nome do produto'
+                 style={styles.input}
+                 value={this.state.nomeProduto}
+                 onChangeText={nomeProduto => this.setState({nomeProduto})}/>
+
                 <TextInput placeholder='Preço'
                  style={styles.input}
                  value={this.state.preco}
                  keyboardType="numeric"
                  onChangeText={preco => this.setState({preco})}/>
 
-                <Picker onValueChange={fabricante => this.setState({fabricante})}>
+                <Picker onValueChange={tipoProduto => this.setState({tipoProduto})}
+                        selectedValue={this.state.tipoProduto}>
                     <Picker.Item label='Açougue' value='Açougue'/>
                     <Picker.Item label='Bebidas' value='Bebidas'/>
                     <Picker.Item label='Congelados' value='Congelados'/>
+                    <Picker.Item label='Diversos' value='Diversos'/>
                     <Picker.Item label='Frios' value='Frios'/>
                     <Picker.Item label='Higiene pessoal' value='Higiene pessoal'/>
                     <Picker.Item label='Hortifrúti' value='Hortifrúti'/>
                     <Picker.Item label='Laticínios' value='Laticínios'/>
                     <Picker.Item label='Limpeza' value='Limpeza'/>
                     <Picker.Item label='Padaria' value='Padaria'/>
+                </Picker>
+
+                <Picker onValueChange={unidadeControle => this.setState({unidadeControle})}
+                        selectedValue={this.state.unidadeControle}>
+                    <Picker.Item label='Unitário' value='Unitário'/>
+                    <Picker.Item label='KG' value='KG'/>
+                    <Picker.Item label='Gramas' value='Gramas'/>
                 </Picker>
                 
                  <TouchableOpacity onPress={this.save} style={[styles.botao, this.props.loading ? styles.botaoDesabilitado : null]} disabled={this.props.loading} >

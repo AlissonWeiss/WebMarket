@@ -31,7 +31,8 @@ const reducer = (state = initialState, action) => {
         case USER_LOADED:
             return {
                 ...state,
-                isLoading: false
+                isLoading: false,
+                isLoggedIn: true,
             }
         default:
             return state

@@ -15,9 +15,9 @@ class Feed extends Component {
                 <Header />
                 <FlatList
                     data={this.props.posts}
-                    keyExtractor={item => `${item.id}`}
+                    keyExtractor={(item) => `${item.id}`}
                     renderItem={({item}) =>
-                <Post key={item.id} {...item} />} />
+                <Post key={item.id} {...item} />} style={styles.post} />
             </View>
         )
     }
@@ -25,11 +25,14 @@ class Feed extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    }
+        height: '100%'
+    },
+    post: {
+        borderRadius: 10,
+        backgroundColor: '#E8F6F4'
+    },
 })
 
 const mapStateToProps = ({ posts }) => {

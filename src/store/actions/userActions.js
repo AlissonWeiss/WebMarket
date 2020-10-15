@@ -1,5 +1,6 @@
 import {USER_LOGGED_IN, USER_LOGGED_OUT, LOADING_USER, USER_LOADED} from './actionTypes'
 import axios from 'axios'
+import {setMessage} from './messageAction'
 
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
 const API_KEY = 'AIzaSyClDUkZre2HhhgssswL8UzRK4cAVuEnXVQ'
@@ -39,24 +40,28 @@ export const login = user => {
         })
         .catch(err => {
             dispatch(setMessage({
-                title: 'Erro',
-                text: 'Ocorreu um erro inesperado!'
+                title: 'Login inválido',
+                text: 'Email ou senha incorretos!'
             }))
         })
         .then(res => {
             if (res.data.localId){
                 user.token = res.data.idToken
                 axios.get(`/users/${res.data.localId}.json`)
-                .catch(error => console.log(error.response.request._response))
+                .catch(err => {
+                    dispatch(setMessage({
+                        title: 'Erro',
+                        text: 'Ocorreu um erro inesperado ao efetuar login!'
+                    }))
+                })
                 .then(res => {
-                    user.password = null
+                    delete user.password
                     user.nome = res.data.nome
                     dispatch(userLogged(user))
                     dispatch(userLoaded())
                 })
             }
         })
-        
     }
 }
 
@@ -70,7 +75,7 @@ export const createUser =  user => {
         .catch(err => {
             dispatch(setMessage({
                 title: 'Erro',
-                text: 'Ocorreu um erro inesperado!'
+                text: 'Ocorreu um erro inesperado ao registrar novo usuário!'
             }))
         })
         .then(res => {
@@ -81,7 +86,7 @@ export const createUser =  user => {
                 .catch(err => {
                     dispatch(setMessage({
                         title: 'Erro',
-                        text: 'Ocorreu um erro inesperado!'
+                        text: 'Ocorreu um erro inesperado ao registrar novo usuário!'
                     }))
                 })
                 .then(() => {
