@@ -7,14 +7,11 @@ import {createStackNavigator} from 'react-navigation-stack'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Feed from './screens/Feed'
-import Promotions from './screens/Promotions'
-import Cart from './screens/Cart'
 import Profile from './screens/Profile'
 import AddProduto from './screens/AddProduto'
 import Login from './screens/Login'
 import Register from './screens/Register'
 import Administrator from './screens/Administrator'
-import AddFabricante from './screens/AddFabricante'
 import SplashScreen from './screens/SplashScreen'
 
 const authRouter = createStackNavigator({
@@ -28,7 +25,6 @@ const authRouter = createStackNavigator({
 const administratorRouter = createStackNavigator({
     Administrator: {screen: Administrator, navigationOptions: {title: 'Administrador'}},
     AddProduto: {screen: AddProduto, navigationOptions: {title: 'Adicionar produto'}},
-    AddFabricante: {screen: AddFabricante, navigationOptions: {title: 'Adicionar fabricante'}}
 })
 
 const loginOrProfileRouter = createSwitchNavigator({
@@ -66,38 +62,6 @@ const TabNavigator = createMaterialBottomTabNavigator(
                 title: 'Início'
             }
         },
-        Promocoes: {
-            screen: Promotions,
-            navigationOptions: {
-                tabBarIcon: ({ tintColor }) => (
-                    <View>
-                        <Icon style={[{color: tintColor}]} size={20} name={'percent'} />
-                    </View>
-                ),
-                activeColor: '#ffffff',
-                inactiveColor: '#a3c2fa',
-                barStyle: {
-                    backgroundColor: '#2c6d6a',
-                },
-                title: 'Promoções'
-            },
-        },
-        Carrinho: {
-            screen: Cart,
-            navigationOptions: {
-                tabBarIcon: ({ tintColor }) => (
-                    <View>
-                        <Icon style={[{color: tintColor}]} size={20} name={'shopping-cart'} />
-                    </View>
-                ),
-                activeColor: '#ffffff',
-                inactiveColor: '#ebaabd',
-                barStyle: {
-                    backgroundColor: '#d13560'
-                },
-                title: 'Carrinho'
-            }
-        },
         Perfil: {
             screen: loginOrProfileRouter,
             navigationOptions: {
@@ -130,8 +94,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
                 title: 'Administrador',
             },
         }
-    }
-    ,
+    },
     {
         initialRouteName: 'Feed',
         activeColor: '#f0edf6',
@@ -139,7 +102,6 @@ const TabNavigator = createMaterialBottomTabNavigator(
         barStyle: { 
             backgroundColor: '#6948f4',
          },
-
     }
 );
 
