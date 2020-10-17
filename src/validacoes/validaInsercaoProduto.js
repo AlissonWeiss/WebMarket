@@ -14,7 +14,7 @@ export default class validaInsercaoProduto {
         validacao.validarImagem(produto.image)
         validacao.validarNome(produto.nomeProduto)
         validacao.validarPreco(produto.preco)
-        validacao.validarCategoria(produto.telefone)
+        validacao.validarCategoria(produto.categoria)
         
         return validacao.getMensagemErro();
     }

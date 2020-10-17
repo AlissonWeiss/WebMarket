@@ -2,17 +2,12 @@ import React, {Component } from 'react'
 import {StyleSheet, Text, View, Platform, Image} from 'react-native'
 import icon from '../../assets/imgs/logo.png'
 import {connect} from 'react-redux'
-import {Gravatar} from 'react-native-gravatar'
 
 class Header extends Component{
     render() {
 
         const name = this.props.name || 'Visitante'
-        const gravatar = this.props.email ? 
-            <Gravatar options={{email: this.props.email, secure: true}}
-                style={styles.avatar} />
-            : null
-
+        
         return(
             <View style={styles.container}>
                 <View style={styles.rowContainer}>
@@ -22,7 +17,7 @@ class Header extends Component{
 
                 <View style={styles.userContainer}>
                     <Text style={styles.user}>{name}</Text>
-                    {gravatar}
+                    <Image style={styles.avatar} source={this.props.image ? {uri: this.props.image } : require('../../assets/imgs/noImage.png')} />
                 </View>
             </View>
         )
@@ -46,7 +41,7 @@ const styles = StyleSheet.create({
     image: {
         height: 30,
         width: 30,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     title: {
         paddingLeft: 10,
@@ -65,16 +60,16 @@ const styles = StyleSheet.create({
     avatar: {
         width: 30,
         height: 30,
-        marginLeft: 10
+        marginLeft: 10,
+        borderRadius: 10
     }
 })
 
 const mapStateToProps = ({ user }) => {
     return {
-        email: user.email,
-        name: user.name
+        name: user.nome,
+        image: user.image
     }
 }
-
 
 export default connect(mapStateToProps)(Header)

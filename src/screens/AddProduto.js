@@ -10,16 +10,18 @@ class AddProduto extends Component{
     state = {
         image: null,
         preco: null,
-        tipoProduto: null,
+        categoria: null,
         nomeProduto: null,
+        userName: null,
     }
     componentDidUpdate = prevProps => {
         if (prevProps.loading && !this.props.loading){
             this.setState({
                 image: null,
                 preco: null,
-                tipoProduto: null,
+                categoria: null,
                 nomeProduto: null,
+                userName: null
             })
             this.props.navigation.navigate('Feed')
         }
@@ -45,15 +47,13 @@ class AddProduto extends Component{
         if (retorno == '')
         {
             this.props.onAddProduto({
-                id: this.props.id,
-                name: this.props.name,
                 email: this.props.email,
                 telefone: this.props.telefone,
                 image: this.state.image,
                 preco: this.state.preco,
-                tipoProduto: this.state.tipoProduto,
+                categoria: this.state.categoria,
                 nomeProduto: this.state.nomeProduto,
-                unidadeControle: this.state.unidadeControle
+                userName: this.props.userName
             })
         }
         else{
@@ -61,8 +61,11 @@ class AddProduto extends Component{
         }
     }
 
-    ajustarCasasDecimaisPreco = preco => {
-
+    ajustarCasasDecimaisPreco = () => {
+        if (this.state.preco != null && this.state.preco != ''){
+            var preco = parseFloat(this.state.preco).toFixed(2);
+            this.setState({preco})
+        }
     }
 
     render () {
@@ -84,7 +87,7 @@ class AddProduto extends Component{
                     value={this.state.preco}
                     keyboardType="numeric"
                     onChangeText={preco => this.setState({preco})}
-                    onBlur={preco => ajustarCasasDecimaisPreco(preco)}/>
+                    onBlur={() => this.ajustarCasasDecimaisPreco()}/>
 
                 <TextInput style={styles.input}
                     value={this.props.email}
@@ -94,8 +97,8 @@ class AddProduto extends Component{
                     value={this.props.telefone}
                     editable={false}/>
 
-                <Picker onValueChange={tipoProduto => this.setState({tipoProduto})}
-                        selectedValue={this.state.tipoProduto}>
+                <Picker onValueChange={categoria => this.setState({categoria})}
+                        selectedValue={this.state.categoria}>
                     <Picker.Item label='Selecione uma categoria' value='n/a'/>
                     <Picker.Item label='Automóveis e afins' value='Automóveis e afins'/>
                     <Picker.Item label='Eletrônicos' value='Eletrônicos'/>
@@ -162,11 +165,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({user, posts}) => {
     return {
         email: user.email,
-        name: user.name,
+        userName: user.nome,
         telefone: user.telefone,
         preco: posts.preco,
         loading: posts.isUploading,
-        isLoggedIn: user.isLoggedIn
+        isLoggedIn: user.isLoggedIn,
     }
 }
 

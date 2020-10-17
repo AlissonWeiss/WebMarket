@@ -1,16 +1,28 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import {connect} from 'react-redux'
+import {View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 class Administrator extends Component {
+
+    checarUsuarioLogado = () => {
+        if (!this.props.isLoggedIn) {
+            Alert.alert('Usuário não logado', 'Somente usuários logados podem acessar esta função!')
+            return false
+        }
+        return true
+    }
+
+    adicionarNovoProduto = () => {
+        if (this.checarUsuarioLogado()) {
+            this.props.navigation.navigate('AddProduto')
+        }
+    }
 
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.botao} onPress={() => this.props.navigation.navigate('AddProduto')}>
+                <TouchableOpacity style={styles.botao} onPress={this.adicionarNovoProduto}>
                     <Text style={styles.botaoTexto}>Adicionar novo produto</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.botao} onPress={() => this.props.navigation.navigate('AddFabricante')}>
-                    <Text>Adicionar novo fabricante</Text>
                 </TouchableOpacity>
             </View>
 
@@ -35,4 +47,10 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Administrator
+const mapStateToProps = ({user}) => {
+    return {
+        isLoggedIn: user.isLoggedIn
+    }
+}
+
+export default connect(mapStateToProps)(Administrator)

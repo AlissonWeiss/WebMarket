@@ -70,7 +70,8 @@ const mapStateToProps = ({ user }) => {
         email: user.email,
         nome: user.nome,
         image: user.image,
-        telefone: user.telefone
+        telefone: user.telefone,
+        isLoggedIn: user.isLoggedIn
     }
 }
 
