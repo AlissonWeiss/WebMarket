@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, Text, TouchableOpacity, Image, Dimensions} from 'react-native'
 import {Gravatar} from 'react-native-gravatar'
 import Header from '../components/Header'
 import {connect} from 'react-redux'
 import {logout} from '../store/actions/userActions'
 
 class Profile extends Component {
+
     logout = () => {
         this.props.onLogout()
         this.props.navigation.navigate('Auth')
     }
 
     render() {
-        const options = { email: this.props.email, secure: true}
         return (
             <View style={styles.container}>
-                <Header />
-                <Gravatar options={options} style={styles.avatar} />
+                <Image source={{uri: this.props.image}} style={styles.image} />
                 <Text style={styles.nickname}>{this.props.nome}</Text>
-                <Text style={styles.email}>{this.props.email}</Text>
+                <Text style={styles.contato}>E-mail: {this.props.email}</Text>
+                <Text style={styles.contato}>Telefone: {this.props.telefone}</Text>
                 <TouchableOpacity onPress={this.logout} style={styles.btnLogout}>
                     <Text style={styles.btnText}>Sair</Text>
                 </TouchableOpacity>
@@ -43,10 +43,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold'
     },
-    email: {
-        marginTop: 20,
-        fontSize: 25
-    },
     btnLogout: {
         marginTop: 30,
         padding: 10,
@@ -55,13 +51,26 @@ const styles = StyleSheet.create({
     btnText: {
         fontSize: 20,
         color: '#FFF'
+    },
+    image: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').width * 3 / 5,
+        resizeMode: 'contain',
+        marginTop: 10,
+        borderRadius: 8,
+    },
+    contato: {
+        marginTop: 20,
+        fontSize: 18
     }
 })
 
 const mapStateToProps = ({ user }) => {
     return {
         email: user.email,
-        nome: user.nome
+        nome: user.nome,
+        image: user.image,
+        telefone: user.telefone
     }
 }
 

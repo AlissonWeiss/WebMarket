@@ -1,4 +1,3 @@
-import {setMessage} from '../src/store/actions/messageAction'
 const functions = require('firebase-functions');
 const cors = require('cors')({origin: true})
 const fs = require('fs')
@@ -20,7 +19,7 @@ const storage = new Storage({
             const id = uuid()
             bucket.upload('/tmp/imageToSave.jpg', {
                 uploadType: 'media',
-                destination: `/posts/${id}.jpg`,
+                destination: `/images/${id}.jpg`,
                 metadata: {
                     metadata: {
                         contentType: 'image/jpeg',
@@ -29,10 +28,7 @@ const storage = new Storage({
                 }
             },(erro, file) => {
                 if (erro){
-                    dispatch(setMessage({
-                        title: 'Erro',
-                        text: 'Problema ao salvar imagem.'
-                    }))
+                    console.log(erro)
                     return response.status(500).json({error: erro})
                 }
                 else{

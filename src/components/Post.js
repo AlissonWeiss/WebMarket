@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Dimensions, Text, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, Image, Dimensions, Text } from 'react-native'
+import Autor from './Autor'
 
 class Post extends Component {
     render() {
@@ -10,6 +11,7 @@ class Post extends Component {
                 <Text style={styles.bottomInformations}>Preço: R$ {this.props.preco}</Text>
                 <Text style={styles.bottomInformations}>Tipo de produto: {this.props.tipoProduto}</Text>
                 <Text style={styles.bottomInformations}>Unidade de controle: {this.props.unidadeControle}</Text>
+                <Autor image={this.props.image} nome={'Alisson Weiss'}></Autor>
                 <Text></Text>
             </View>
         )
@@ -27,7 +29,6 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         marginTop: 10,
         borderRadius: 8,
-
     },
     nomeProduto: {
         textAlign: 'center',

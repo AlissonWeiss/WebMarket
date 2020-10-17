@@ -1,4 +1,4 @@
-import {USER_LOGGED_IN, USER_LOGGED_OUT, LOADING_USER, USER_LOADED} from './actionTypes'
+import {USER_LOGGED_IN, USER_LOGGED_OUT, LOADING_USER, USER_LOADED, CREATING_USER} from './actionTypes'
 import axios from 'axios'
 import {setMessage} from './messageAction'
 
@@ -15,6 +15,12 @@ export const userLogged = user => {
 export const logout = () => {
     return {
         type: USER_LOGGED_OUT
+    }
+}
+
+export const criatingUser = () => {
+    return {
+        type: CREATING_USER
     }
 }
 
@@ -57,6 +63,8 @@ export const login = user => {
                 .then(res => {
                     delete user.password
                     user.nome = res.data.nome
+                    user.image = res.data.image
+                    user.telefone = res.data.telefone
                     dispatch(userLogged(user))
                     dispatch(userLoaded())
                 })
@@ -64,15 +72,15 @@ export const login = user => {
         })
     }
 }
-
 export const createUser =  user => {
     return dispatch => {
-      axios.post(`${authBaseURL}/signupNewUser?key=${API_KEY}`, {
+        dispatch(criatingUser())
+        axios.post(`${authBaseURL}/signupNewUser?key=${API_KEY}`, {
             email: user.email,
             password: user.password,
             returnSecureToken: true
         })
-        .catch(err => {
+        .catch(() => {
             dispatch(setMessage({
                 title: 'Erro',
                 text: 'Ocorreu um erro inesperado ao registrar novo usuário!'
@@ -80,17 +88,35 @@ export const createUser =  user => {
         })
         .then(res => {
             if (res.data.localId){
-                axios.put(`/users/${res.data.localId}.json`, {
-                    nome: user.nome,
+                axios({
+                    url: 'uploadImage',
+                    baseURL: 'https://us-central1-webmarket-007.cloudfunctions.net/',
+                    method: 'post',
+                    data: {
+                        image: user.image.base64
+                    }
                 })
-                .catch(err => {
+                .catch(() => {
                     dispatch(setMessage({
                         title: 'Erro',
-                        text: 'Ocorreu um erro inesperado ao registrar novo usuário!'
+                        text: 'Ocorreu um erro ao salvar a imagem de perfil!'
                     }))
                 })
-                .then(() => {
-                    dispatch(login(user))
+                .then(resp => {
+                    axios.put(`/users/${res.data.localId}.json`, {
+                        nome: user.nome,
+                        image: resp.data.imageUrl,
+                        telefone: user.telefone
+                    })
+                    .catch(() => {
+                        dispatch(setMessage({
+                            title: 'Erro',
+                            text: 'Ocorreu um erro inesperado ao registrar novo usuário!'
+                        }))
+                    })
+                    .then(() => {
+                        dispatch(login(user))
+                    })
                 })
             }
         })

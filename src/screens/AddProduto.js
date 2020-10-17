@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Dimensions, Platform, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image, Dimensions, Platform, ScrollView, Alert} from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import {connect} from 'react-redux'
 import {addProduct} from '../store/actions/produtosActions'
 import {Picker} from '@react-native-community/picker'
+import validaInsercaoProduto from '../validacoes/validaInsercaoProduto'
 
 class AddProduto extends Component{
     state = {
@@ -11,7 +12,6 @@ class AddProduto extends Component{
         preco: null,
         tipoProduto: null,
         nomeProduto: null,
-        unidadeControle: null,
     }
     componentDidUpdate = prevProps => {
         if (prevProps.loading && !this.props.loading){
@@ -20,7 +20,6 @@ class AddProduto extends Component{
                 preco: null,
                 tipoProduto: null,
                 nomeProduto: null,
-                unidadeControle: null,
             })
             this.props.navigation.navigate('Feed')
         }
@@ -42,16 +41,28 @@ class AddProduto extends Component{
         })
     }
     save = async () => {
-        this.props.onAddProduto({
-            id: this.props.id,
-            name: this.props.name,
-            email: this.props.email,
-            image: this.state.image,
-            preco: this.state.preco,
-            tipoProduto: this.state.tipoProduto,
-            nomeProduto: this.state.nomeProduto,
-            unidadeControle: this.state.unidadeControle
-        })
+        var retorno = new validaInsercaoProduto().Validate(this.state)
+        if (retorno == '')
+        {
+            this.props.onAddProduto({
+                id: this.props.id,
+                name: this.props.name,
+                email: this.props.email,
+                telefone: this.props.telefone,
+                image: this.state.image,
+                preco: this.state.preco,
+                tipoProduto: this.state.tipoProduto,
+                nomeProduto: this.state.nomeProduto,
+                unidadeControle: this.state.unidadeControle
+            })
+        }
+        else{
+            Alert.alert('Erro', retorno)
+        }
+    }
+
+    ajustarCasasDecimaisPreco = preco => {
+
     }
 
     render () {
@@ -64,35 +75,36 @@ class AddProduto extends Component{
                 </View>
 
                 <TextInput placeholder='Nome do produto'
-                 style={styles.input}
-                 value={this.state.nomeProduto}
-                 onChangeText={nomeProduto => this.setState({nomeProduto})}/>
+                    style={styles.input}
+                    value={this.state.nomeProduto}
+                    onChangeText={nomeProduto => this.setState({nomeProduto})}/>
 
                 <TextInput placeholder='Preço'
-                 style={styles.input}
-                 value={this.state.preco}
-                 keyboardType="numeric"
-                 onChangeText={preco => this.setState({preco})}/>
+                    style={styles.input}
+                    value={this.state.preco}
+                    keyboardType="numeric"
+                    onChangeText={preco => this.setState({preco})}
+                    onBlur={preco => ajustarCasasDecimaisPreco(preco)}/>
+
+                <TextInput style={styles.input}
+                    value={this.props.email}
+                    editable={false}/>
+
+                <TextInput style={styles.input}
+                    value={this.props.telefone}
+                    editable={false}/>
 
                 <Picker onValueChange={tipoProduto => this.setState({tipoProduto})}
                         selectedValue={this.state.tipoProduto}>
-                    <Picker.Item label='Açougue' value='Açougue'/>
-                    <Picker.Item label='Bebidas' value='Bebidas'/>
-                    <Picker.Item label='Congelados' value='Congelados'/>
-                    <Picker.Item label='Diversos' value='Diversos'/>
-                    <Picker.Item label='Frios' value='Frios'/>
-                    <Picker.Item label='Higiene pessoal' value='Higiene pessoal'/>
-                    <Picker.Item label='Hortifrúti' value='Hortifrúti'/>
-                    <Picker.Item label='Laticínios' value='Laticínios'/>
-                    <Picker.Item label='Limpeza' value='Limpeza'/>
-                    <Picker.Item label='Padaria' value='Padaria'/>
-                </Picker>
-
-                <Picker onValueChange={unidadeControle => this.setState({unidadeControle})}
-                        selectedValue={this.state.unidadeControle}>
-                    <Picker.Item label='Unitário' value='Unitário'/>
-                    <Picker.Item label='KG' value='KG'/>
-                    <Picker.Item label='Gramas' value='Gramas'/>
+                    <Picker.Item label='Selecione uma categoria' value='n/a'/>
+                    <Picker.Item label='Automóveis e afins' value='Automóveis e afins'/>
+                    <Picker.Item label='Eletrônicos' value='Eletrônicos'/>
+                    <Picker.Item label='Imóveis' value='Imóveis'/>
+                    <Picker.Item label='Itens para sua casa' value='Itens para sua casa'/>
+                    <Picker.Item label='Jogos de tabuleiro' value='Jogos de tabuleiro'/>
+                    <Picker.Item label='Moda e beleza' value='Moda e beleza'/>
+                    <Picker.Item label='Serviços' value='Serviços'/>
+                    <Picker.Item label='Video games e afins' value='Video games e afins'/>
                 </Picker>
                 
                  <TouchableOpacity onPress={this.save} style={[styles.botao, this.props.loading ? styles.botaoDesabilitado : null]} disabled={this.props.loading} >
@@ -122,7 +134,9 @@ const styles = StyleSheet.create({
     image: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').width / 2,
-        resizeMode: 'center'
+        resizeMode: 'center',
+        alignSelf: 'center',
+        borderRadius: 10
     },
     botao: {
         marginTop: 5,
@@ -149,8 +163,8 @@ const mapStateToProps = ({user, posts}) => {
     return {
         email: user.email,
         name: user.name,
+        telefone: user.telefone,
         preco: posts.preco,
-        fabricante: posts.fabricante,
         loading: posts.isUploading,
         isLoggedIn: user.isLoggedIn
     }
