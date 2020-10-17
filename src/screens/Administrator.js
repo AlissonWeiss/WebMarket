@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import {ImageBackground, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 class Administrator extends Component {
 
@@ -20,12 +20,13 @@ class Administrator extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.botao} onPress={this.adicionarNovoProduto}>
-                    <Text style={styles.botaoTexto}>Adicionar novo produto</Text>
-                </TouchableOpacity>
-            </View>
-
+            <ImageBackground source={require('../../assets/imgs/backgroundAdministrator.jpg')} style={styles.backgroundImage}>
+                <View style={styles.container}>
+                    <TouchableOpacity style={styles.botao} onPress={this.adicionarNovoProduto}>
+                        <Text style={styles.botaoTexto}>Adicionar novo produto</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
         )
     }
 }
@@ -37,13 +38,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     botao: {
-        marginTop: 30,
+        backgroundColor: '#080',
+        marginTop: 10,
         padding: 10,
-        backgroundColor: '#4286f4'
+        alignItems: 'center'
     },
     botaoTexto: {
-        fontSize: 20,
-        color: '#FFF'
+        color: '#FFF',
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    backgroundImage: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 })
 

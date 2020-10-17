@@ -14,7 +14,7 @@ export default class validaRegistro {
 
     Validate(user) {
         var validacao = new ValidateRegistro();
-        validacao.validarImagem(user.image)
+        validacao.validarImagem(user.image, user.isImageDefault)
         validacao.validarNome(user.nome)
         validacao.validarEmail(user.email)
         validacao.validarTelefone(user.telefone)
@@ -28,8 +28,8 @@ class ValidateRegistro {
 
     mensagensErrosRegistro = '';
 
-    validarImagem(imagem){
-        if (imagem == null || imagem == ''){
+    validarImagem(imagem, isImageDefault){
+        if (imagem == null || imagem == '' || isImageDefault){
             this.concatenar(REGISTRO_IMAGEM_OBRIGATORIA)
         }
     }

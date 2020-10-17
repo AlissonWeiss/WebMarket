@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
+import {ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
 import {connect} from 'react-redux'
 import {login} from '../store/actions/userActions'
+
+import IconFontisto from 'react-native-vector-icons/Fontisto'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class Login extends Component {
     state = {
@@ -25,19 +28,27 @@ class Login extends Component {
 
     render() {
         return (
+            <ImageBackground source={require('../../assets/imgs/backgroundLogin.jpg')} style={styles.backgroundImage}>
             <View style={styles.container}>
-                <TextInput placeholder='Email'
-                style={styles.input}
-                autoFocus={true}
-                keyboardType='email-address'
-                value={this.state.email}
-                onChangeText={email => this.setState({email})} />
 
-                <TextInput placeholder='Senha'
-                style={styles.input}
-                value={this.state.password}
-                secureTextEntry={true}
-                onChangeText={password => this.setState({password})} />
+                <View style={styles.containerInput}>
+                    <IconFontisto name={'email'} style={styles.icon} />
+                    <TextInput placeholder='Email'
+                    style={styles.input}
+                    autoFocus={true}
+                    keyboardType='email-address'
+                    value={this.state.email}
+                    onChangeText={email => this.setState({email})} />
+                </View>
+
+                <View style={styles.containerInput}>
+                    <MaterialCommunityIcons name={'security'} style={styles.icon} />
+                    <TextInput placeholder='Senha'
+                    style={styles.input}
+                    value={this.state.password}
+                    secureTextEntry={true}
+                    onChangeText={password => this.setState({password})} />
+                </View>
 
                 <TouchableOpacity style={styles.botao} onPress={this.login}>
                     <Text style={styles.botaoTexto}>Login</Text>
@@ -48,34 +59,50 @@ class Login extends Component {
                 }}>
                     <Text style={styles.botaoTexto}>Registrar</Text>
                 </TouchableOpacity>
-
             </View>
+            </ImageBackground>
         )
     }
 }
 
 const styles = StyleSheet.create ({
     container: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 20,
+        width: '95%'
+    },
+    botao: {
+        backgroundColor: '#080',
+        marginTop: 10,
+        padding: 10,
+        alignItems: 'center'
+    },
+    botaoTexto: {
+        color: '#FFF',
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
+    input: {
+        backgroundColor: '#EEE',
+        padding: 10,
+        width: '80%'
+    },
+    backgroundImage: {
         flex: 1,
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
     },
-    botao: {
-        marginTop: 30,
-        padding: 10,
-        backgroundColor: '#4286f4'
-    },
-    botaoTexto: {
-        fontSize: 20,
-        color: '#FFF'
-    },
-    input: {
-        marginTop: 20,
-        width: '90%',
+    containerInput: {
+        width: '100%',
         backgroundColor: '#EEE',
-        height: 40,
-        borderWidth: 1,
-        borderColor: '#333'
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    icon: {
+        padding: 10,
     }
 })
 

@@ -1,19 +1,24 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Image, Dimensions } from 'react-native'
+import {ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Image, Dimensions } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import {connect} from 'react-redux'
 import {createUser} from '../store/actions/userActions'
+
+import IconFontisto from 'react-native-vector-icons/Fontisto'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 
 import validaRegistro from '../validacoes/validaRegistro'
 
 class Register extends Component {
     state = {
-        image: null,
+        image: require('../../assets/imgs/noImage.png'),
         nome: '',
         password: '',
         passwordConfirmacao: '',
         email: '',
         telefone: '',
+        isImageDefault: true
     }
 
     salvar = user => {
@@ -41,7 +46,6 @@ class Register extends Component {
     }
 
     pickImage = () => {
-
         ImagePicker.showImagePicker({
             title: 'Escolha a imagem',
             maxHeight: 600,
@@ -52,93 +56,125 @@ class Register extends Component {
         }, res => {
             if (!res.didCancel){
                 this.setState({image : {uri: res.uri, base64: res.data}})
+                this.setState({isImageDefault : false})
             }
         })
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.imageContainer} onTouchStart={this.pickImage} >
-                    <Image source={this.state.image} style={styles.image}  />
+            <ImageBackground source={require('../../assets/imgs/backgroundRegister.jpg')} style={styles.backgroundImage}>
+                <View style={styles.container}>
+                    <View style={styles.imageContainer} onTouchStart={this.pickImage} >
+                        <Image source={this.state.image} style={styles.image}  />
+                    </View>
+                    
+                    <View style={styles.containerInput}>
+                        <SimpleLineIcons name={'user'} style={styles.icon} />
+                        <TextInput placeholder='Nome'
+                            style={styles.input}
+                            autoFocus={true}
+                            value={this.state.nome}
+                            onChangeText={nome => this.setState({nome})} />
+                    </View>
+                    
+                    <View style={styles.containerInput} >
+                        <IconFontisto name={'email'} style={styles.icon} />
+                        <TextInput placeholder='Email'
+                            style={styles.input}
+                            value={this.state.telefone}
+                            keyboardType='email-address'
+                            onChangeText={email => this.setState({email})} />
+                    </View>
+
+                    <View style={styles.containerInput} >
+                        <IconFontisto name={'phone'} style={styles.icon} />
+                        <TextInput placeholder='Telefone'
+                            style={styles.input}
+                            value={this.state.telefone}
+                            keyboardType='phone-pad'
+                            onChangeText={telefone => this.setState({telefone})}
+                            maxLength={12} />
+                    </View>
+
+                    <View style={styles.containerInput}>
+                        <MaterialCommunityIcons name={'security'} style={styles.icon} />
+                        <TextInput placeholder='Senha'
+                            style={styles.input}
+                            value={this.state.password}
+                            secureTextEntry={true}
+                            onChangeText={password => this.setState({password})} />
+                    </View>
+
+                    <View style={styles.containerInput}>
+                        <MaterialCommunityIcons name={'security'} style={styles.icon} />
+                        <TextInput placeholder='Confirme sua senha'
+                            style={styles.input}
+                            value={this.state.passwordConfirmacao}
+                            secureTextEntry={true}
+                            onChangeText={passwordConfirmacao => this.setState({passwordConfirmacao})} />
+                    </View>
+
+                    <TouchableOpacity style={styles.botao} onPress={() => this.salvar(this.state)}>
+                        <Text style={styles.botaoTexto}>Registrar</Text>
+                    </TouchableOpacity>
                 </View>
-                
-                <TextInput placeholder='Nome'
-                    style={styles.input}
-                    autoFocus={true}
-                    value={this.state.nome}
-                    onChangeText={nome => this.setState({nome})} />
-
-                <TextInput placeholder='Email'
-                    style={styles.input}
-                    value={this.state.email}
-                    keyboardType='email-address'
-                    onChangeText={email => this.setState({email})} />
-
-                <TextInput placeholder='Telefone'
-                    style={styles.input}
-                    value={this.state.telefone}
-                    keyboardType='phone-pad'
-                    onChangeText={telefone => this.setState({telefone})}
-                    maxLength={12} />
-
-                <TextInput placeholder='Senha'
-                    style={styles.input}
-                    value={this.state.password}
-                    secureTextEntry={true}
-                    onChangeText={password => this.setState({password})} />
-
-                <TextInput placeholder='Confirme sua senha'
-                    style={styles.input}
-                    value={this.state.passwordConfirmacao}
-                    secureTextEntry={true}
-                    onChangeText={passwordConfirmacao => this.setState({passwordConfirmacao})} />
-
-                <TouchableOpacity style={styles.botao} onPress={() => this.salvar(this.state)}>
-                    <Text style={styles.botaoTexto}>Registrar</Text>
-                </TouchableOpacity>
-            </View>
+            </ImageBackground>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 20,
+        width: '90%',
+        alignItems: 'center'
     },
     botao: {
-        marginTop: 30,
+        backgroundColor: '#080',
+        marginTop: 10,
         padding: 10,
-        backgroundColor: '#4286f4'
+        alignItems: 'center'
     },
     botaoTexto: {
-        fontSize: 20,
-        color: '#FFF'
+        color: '#FFF',
+        fontSize: 15,
+        fontWeight: 'bold'
     },
     input: {
-        marginTop: 20,
-        width: '90%',
-        backgroundColor: '#EEE',
-        height: 40,
-        borderWidth: 1,
-        borderColor: '#333',
-        paddingLeft: 15
+        backgroundColor: '#FFF',
+        padding: 10,
+        width: '85%'
     },
     imageContainer: {
-        width: '90%',
+        width: Dimensions.get('window').width / 2,
         height: Dimensions.get('window').width / 2,
-        backgroundColor: '#EEE',
     },
     image: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').width / 2,
         resizeMode: 'center',
         alignSelf: 'center',
-        borderRadius: 10
-        
+        borderRadius: 10,
     },
+    backgroundImage: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    containerInput: {
+        width: '100%',
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    icon: {
+        padding: 10,
+    }
 })
 
 const mapStateToProps = ({user}) => {
