@@ -20,7 +20,8 @@ class AddProduto extends Component{
         categoria: null,
         nomeProduto: null,
         userName: null,
-        isImageDefault: true
+        isImageDefault: true,
+        dataPublicacao: null
     }
     componentDidUpdate = prevProps => {
         if (prevProps.loading && !this.props.loading){
@@ -30,7 +31,8 @@ class AddProduto extends Component{
                 categoria: null,
                 nomeProduto: null,
                 userName: null,
-                isImageDefault: true
+                isImageDefault: true,
+                dataPublicacao: null
             })
             this.props.navigation.navigate('Feed')
         }
@@ -52,6 +54,16 @@ class AddProduto extends Component{
             }
         })
     }
+
+    retornaDataFormatadaString = () => {
+        var data = new Date()
+        var dia = data.getDate()
+        var mes = data.getMonth() + 1
+        var ano = data.getFullYear()
+
+        return dia + '/' + mes + '/' + ano
+    }
+
     save = async () => {
         var retorno = new validaInsercaoProduto().Validate(this.state)
         if (retorno == '')
@@ -63,7 +75,8 @@ class AddProduto extends Component{
                 preco: this.state.preco,
                 categoria: this.state.categoria,
                 nomeProduto: this.state.nomeProduto,
-                userName: this.props.userName
+                userName: this.props.userName,
+                dataPublicacao: this.retornaDataFormatadaString()
             })
         }
         else{
@@ -92,7 +105,7 @@ class AddProduto extends Component{
                         <SimpleLineIcons name={'user'} style={styles.icon} />
                         <TextInput placeholder='Nome do produto'
                             style={styles.input}
-                            //autoFocus={true}
+                            autoFocus={true}
                             value={this.state.nomeProduto}
                             onChangeText={nomeProduto => this.setState({nomeProduto})} />
                     </View>
@@ -101,7 +114,7 @@ class AddProduto extends Component{
                         <MaterialIcons name={'attach-money'} style={[styles.icon, {fontSize: 15}]} />
                         <TextInput placeholder='Preço'
                             style={styles.input}
-                            value={this.state.nome}
+                            value={this.state.preco}
                             keyboardType='decimal-pad'
                             onChangeText={preco => this.setState({preco})}
                             onBlur={() => this.ajustarCasasDecimaisPreco()} />

@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     postImpar: {
-        backgroundColor: '#E8F6F4',
+        backgroundColor: '#FFF',
         borderBottomColor: '#999999',
         borderBottomWidth: 3
     },
     postPar: {
-        backgroundColor: '#E8F6D4',
+        backgroundColor: '#DDD',
         borderBottomColor: '#999999',
         borderBottomWidth: 3
     },

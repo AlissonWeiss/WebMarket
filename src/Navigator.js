@@ -15,7 +15,7 @@ import Administrator from './screens/Administrator'
 import SplashScreen from './screens/SplashScreen'
 
 const authRouter = createStackNavigator({
-    Login: {screen: Login, navigationOptions: {title: 'Login'} },
+    Login: {screen: Login, navigationOptions: {title: 'Login'}},
     Register: {screen: Register, navigationOptions: {title: 'Registrar'}}
 },
 {
@@ -89,7 +89,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
                 activeColor: '#ffffff',
                 inactiveColor: '#92c5c2',
                 barStyle: {
-                    backgroundColor: '#696969'
+                    backgroundColor: '#228B22'
                 },
                 title: 'Administrador',
             },

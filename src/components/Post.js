@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Dimensions, Text } from 'react-native'
+import {StyleSheet, View, Image, Dimensions, Text } from 'react-native'
 import Autor from './Autor'
 
 class Post extends Component {
@@ -8,16 +8,21 @@ class Post extends Component {
         imageUser: null
     }
 
+    formatData = data => {
+        const formater = new Intl.DateTimeFormat('br');
+        this.props.dataPublicacao = formater.formatToParts(data)
+    }
+
     render() {
         return (
             <View style={StyleSheet.container}>
                 <Text style={styles.nomeProduto}>{this.props.nomeProduto}</Text>
                 <Image source={{uri: this.props.image}} style={styles.image} />
-                <Text style={styles.bottomInformations}>Preço: R$ {this.props.preco}</Text>
-                <Text style={styles.bottomInformations}>Tipo de produto: {this.props.tipoProduto}</Text>
-                <Text style={styles.bottomInformations}>Unidade de controle: {this.props.unidadeControle}</Text>
+                <Text style={styles.bottomInformations}>R$ {this.props.preco}</Text>
+                <Text style={styles.bottomInformations}>Categoria: {this.props.categoria}</Text>
+                <Text style={styles.bottomInformations}>Data da publicação: {this.props.dataPublicacao}</Text>
                 <View style={styles.contato}>
-                    <Text>Contato</Text>
+                    <Text style={styles.titleContato}>Contato</Text>
                     <Autor telefone={this.props.telefone} email={this.props.email} userName={this.props.userName}></Autor>
                 </View>
             </View>
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
     bottomInformations: {
         fontSize: 15,
         textAlign: 'center',
-        color: 'gray',
+        color: 'black',
         fontWeight: 'bold',
         fontStyle: "italic"
     },
@@ -54,6 +59,13 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10,
         borderColor: '#ABC'
-    }
+    },
+    titleContato: {
+        textAlign: 'left',
+        fontSize: 25,
+        fontWeight: 'bold',
+        borderTopStartRadius: 10,
+        backgroundColor: '#909090',
+    },
 })
 export default Post

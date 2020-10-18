@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 
 class Header extends Component{
     render() {
-
         const name = this.props.name || 'Visitante'
         
         return(
