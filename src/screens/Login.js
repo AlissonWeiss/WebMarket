@@ -38,7 +38,8 @@ class Login extends Component {
                     autoFocus={true}
                     keyboardType='email-address'
                     value={this.state.email}
-                    onChangeText={email => this.setState({email})} />
+                    onChangeText={email => this.setState({email})}
+                    autoCapitalize='none' />
                 </View>
 
                 <View style={styles.containerInput}>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import {StyleSheet, View, Text, TouchableOpacity, Image, Dimensions} from 'react-native'
-import {Gravatar} from 'react-native-gravatar'
-import Header from '../components/Header'
+import {ImageBackground, StyleSheet, View, Text, TouchableOpacity, Image, Dimensions} from 'react-native'
 import {connect} from 'react-redux'
 import {logout} from '../store/actions/userActions'
+
+import IconFontisto from 'react-native-vector-icons/Fontisto'
 
 class Profile extends Component {
 
@@ -14,43 +14,54 @@ class Profile extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Image source={{uri: this.props.image}} style={styles.image} />
-                <Text style={styles.nickname}>{this.props.nome}</Text>
-                <Text style={styles.contato}>E-mail: {this.props.email}</Text>
-                <Text style={styles.contato}>Telefone: {this.props.telefone}</Text>
-                <TouchableOpacity onPress={this.logout} style={styles.btnLogout}>
-                    <Text style={styles.btnText}>Sair</Text>
-                </TouchableOpacity>
-            </View>
+            <ImageBackground source={require('../../assets/imgs/backgroundProfile.jpg')} style={styles.backgroundImage}>
+                <View style={styles.container}>
+                    <Image source={{uri: this.props.image}} style={styles.image} />
+
+                    <Text style={styles.nickname}>{this.props.nome}</Text>
+
+                    <View style={styles.containerInfo}>
+                        <IconFontisto name={'email'} style={styles.icon} />
+                        <Text style={styles.textos}>{this.props.email}</Text>
+                    </View>
+
+                    <View style={styles.containerInfo}>
+                        <IconFontisto name={'phone'} style={styles.icon} />
+                        <Text style={styles.textos}>{this.props.telefone}</Text>
+                    </View>
+                    
+                    <TouchableOpacity onPress={this.logout} style={styles.botao}>
+                        <Text style={styles.botaoTexto}>Sair</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: 'center',
-    },
-    avatar: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-        marginTop: 100
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 20,
+        width: '90%',
     },
     nickname: {
-        marginTop: 30,
-        fontSize: 30,
-        fontWeight: 'bold'
+        marginTop: 25,
+        fontSize: 25,
+        fontWeight: 'bold',
+        backgroundColor: '#AAA',
     },
-    btnLogout: {
+    botao: {
+        backgroundColor: '#080',
         marginTop: 30,
         padding: 10,
-        backgroundColor: '#4286f4'
+        alignItems: 'center'
     },
-    btnText: {
-        fontSize: 20,
-        color: '#FFF'
+    botaoTexto: {
+        color: '#FFF',
+        fontSize: 18,
+        fontWeight: 'bold'
     },
     image: {
         width: Dimensions.get('window').width,
@@ -59,10 +70,28 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderRadius: 8,
     },
-    contato: {
-        marginTop: 20,
-        fontSize: 18
-    }
+    backgroundImage: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    containerInfo: {
+        width: '100%',
+        backgroundColor: '#AAA',
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    icon: {
+        padding: 10,
+    },
+    textos: {
+        backgroundColor: '#AAA',
+        padding: 10,
+        width: '85%',
+    },
 })
 
 const mapStateToProps = ({ user }) => {

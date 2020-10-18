@@ -40,7 +40,7 @@ export const login = user => {
     return dispatch => {
         dispatch(loadingUser())
         axios.post(`${authBaseURL}/verifyPassword?key=${API_KEY}`, {
-            email: user.email,
+            email: user.email.toLowerCase(),
             password: user.password,
             returnSecureToken: true,
         })

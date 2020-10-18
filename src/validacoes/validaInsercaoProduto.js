@@ -11,7 +11,7 @@ export default class validaInsercaoProduto {
 
     Validate(produto) {
         var validacao = new ValidateRegistro();
-        validacao.validarImagem(produto.image)
+        validacao.validarImagem(produto.image, produto.isImageDefault)
         validacao.validarNome(produto.nomeProduto)
         validacao.validarPreco(produto.preco)
         validacao.validarCategoria(produto.categoria)
@@ -24,8 +24,8 @@ class ValidateRegistro {
 
     mensagensErrosRegistro = '';
 
-    validarImagem(imagem){
-        if (imagem == null || imagem == ''){
+    validarImagem(imagem, imagemDefault){
+        if (imagem == null || imagem == '' || imagemDefault){
             this.concatenar(ADDPRODUTO_IMAGEM_OBRIGATORIA)
         }
     }
