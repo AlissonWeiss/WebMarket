@@ -22,7 +22,7 @@ class Login extends Component {
     }
 
     login = () => {
-        this.state.isLoggedIn = true;
+        this.setState({isLoggedIn: true})
         this.props.onLogin({...this.state})
     }
 

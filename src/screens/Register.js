@@ -82,7 +82,7 @@ class Register extends Component {
                         <IconFontisto name={'email'} style={styles.icon} />
                         <TextInput placeholder='Email'
                             style={styles.input}
-                            value={this.state.telefone}
+                            value={this.state.email}
                             keyboardType='email-address'
                             onChangeText={email => this.setState({email})} />
                     </View>
